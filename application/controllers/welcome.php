@@ -3,7 +3,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Welcome extends CI_Controller {
+class welcome extends CI_Controller {
 
     /**
      * Index Page for this controller.
@@ -31,14 +31,16 @@ class Welcome extends CI_Controller {
      * @param type $msg
      */
     public function sample($param1 = "tidak ada", $param2 = "tidak ada") {
-        if (isset($_GET['q1']))
-            $queryString1 = $_GET['q1'];
-        else
+        if (isset($_GET['q1'])) {
+            $queryString1 = filter_input(INPUT_GET, "q1");
+        } else {
             $queryString1 = "tidak ada";
-        if (isset($_GET['q2']))
-            $queryString2 = $_GET['q2'];
-        else
+        }
+        if (isset($_GET['q2'])) {
+            $queryString2 = filter_input(INPUT_GET, "q2");
+        } else {
             $queryString2 = "tidak ada";
+        }
         echo "<pre>function param 1 :" . $param1
         . "\n<br>function param 2 :" . $param2
         . "\n<br>query string 1   :" . $queryString1
