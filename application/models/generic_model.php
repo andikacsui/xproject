@@ -374,3 +374,65 @@ class Generic_Model extends CI_Model {
 	}
 
 }
+
+	/**
+	 * 
+	 * @param string $primary_table primary table name to be joined.
+	 * @param array $criteria criteria for primary table
+	 * @param array $table_refid array (foreign table name => reference ID  on foreign table)
+	 * @param string $selected selected field from joined table, concat in a string, separated with comma.
+	 * @param array $alias_in_primary alias name for foreign field in primary table.
+	 * @param array $order_criteria data order
+	 * @param string $length length of data
+	 * @param string $offset offset of data
+	 */
+	public function retrieve_joined($primary_table="", $criteria=array(), 
+			$table_refid=array(), $selected="", $alias_in_primary=array(), 
+			$order_criteria=array(), $length=NULL, $offset=NULL, $group_by="", $join_type="left") {
+		
+		// check if primary table exist in db.
+		if (!$this->db->table_exists($primary_table)) {
+			return NULL;
+		}
+		
+		$this->db->select($selected);
+		$this->db->from($primary_table);
+		$this->db->where($criteria);
+		
+		foreach($table_refid as $foreign_table => $reference_id) {
+			
+			// check if foreign table exist in db.
+			if (!$this->db->table_exists($foreign_table)) {
+				continue; // continue joining another table.
+			}
+			
+			// if $foreign table index hasn't SET at all, and if that index is SET to null
+			if (isset($alias_in_primary[$foreign_table]) && $alias_in_primary[$foreign_table]) {
+				
+				$this->db->join($foreign_table, $foreign_table .".". $reference_id ."=".
+						$primary_table .".". $alias_in_primary[$foreign_table], $join_type);
+				
+			} else {
+				
+				$this->db->join($foreign_table, $foreign_table .".". $reference_id ."=".
+						$primary_table .".". $foreign_table ."_". $reference_id, $join_type);
+			}
+			
+		}
+		
+		foreach($order_criteria as $field => $order) {
+			$this->db->order_by($field, $order);
+		}
+		
+		if($group_by != "") {
+			$this->db->group_by($group_by);
+		}
+		
+		if ($length && $offset) {
+			$this->db->limit($length, $offset);
+		} 
+		
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+	
