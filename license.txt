@@ -1,7 +1,14 @@
 Copyright (c) 2008 - 2014, EllisLab, Inc.
 All rights reserved.
+<<<<<<< HEAD
 fdgh
 This license is a legal agreement between you and EllisLab Inc. for the use
+=======
+
+tambah
+
+this license is a legal agreement between you and EllisLab Inc. for the use
+>>>>>>> origin/master
 of CodeIgniter Software (the "Software").  By obtaining the Software you
 agree to comply with the terms and conditions of this license.
 
