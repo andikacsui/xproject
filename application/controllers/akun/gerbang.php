@@ -4,6 +4,12 @@ if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 class gerbang extends CI_Controller {
+    
+    /**
+     * Membuka halaman login
+     */
+    public function index(){
+    }
 
     /**
      * login

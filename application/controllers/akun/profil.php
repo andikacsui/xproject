@@ -7,6 +7,7 @@ class profil extends CI_Controller {
 
     /**
      * Menampilkan profil lengkap seorang pengguna
+     * @param type $id id user yang ingin dilihat profilnya
      */
     public function lihat($id) {
         
@@ -14,8 +15,9 @@ class profil extends CI_Controller {
     
     /**
      * Membuka halaman ubah profil
+     * @param type $id id user yang ingin diubah profilnya
      */
-    public function ubah(){
+    public function ubah($id){
         
     }
     
