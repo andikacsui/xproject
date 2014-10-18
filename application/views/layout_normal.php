@@ -13,6 +13,22 @@
 </head>
 <body>
     <h2><?php echo $title; ?></h2>
+    <div>Anda login sebagai <?php echo $user['name'] ?></div>
+    <div id="sidebar">
+        <?php
+        switch ($user['role']) {
+            case ROLE_ADMIN:
+                require_once 'menu_admin.php';
+                break;
+            case ROLE_PBKD:
+                include_once 'menu_pbkd.php';
+                break;
+            case ROLE_MENTOR:
+                include_once 'menu_mentor.php';
+                break;
+        }
+        ?>
+    </div>
     <div id="container">
         <div id="content">
             <?php content(); ?>

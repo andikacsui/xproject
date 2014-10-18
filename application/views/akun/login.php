@@ -7,5 +7,5 @@
 
 <?php }
     $title = "Halaman Login";
-    require_once APPPATH.'views/layout_normal.php';
+    require_once APPPATH.'views/layout_login.php';
 ?>
