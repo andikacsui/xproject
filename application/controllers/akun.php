@@ -8,35 +8,39 @@ if (!defined('BASEPATH'))
 class akun extends CI_Controller {
 
     var $view_data = array();
-    
     public function __construct() {
         parent::__construct();
-        $this->view_data["user"] = array("role" => ROLE_ADMIN,"name"=>"ADMIN");
+        $this->view_data["data"] = null;
+        $this->view_data["user"] = array("role" => ROLE_ADMIN, "name" => "ADMIN");
     }
     /**
      * Arahkan ke halaman tertentu sesuai dengan role
      */
     public function index() {
+        
     }
-    
     //--------------------------- REGISTRASI ----------------------------------
     /**
      * Membuka halaman pendaftaran user
      */
     public function form_registrasi() {
-        $this->load->view("akun/registrasi", $this->view_data);
+        $this->view_data['data']['user'] = $this->view_data['user'];
+        $this->load->view("akun/form_registrasi", $this->view_data);
     }
     /**
      * Menangani pendaftaran secara manual
      */
     public function registrasi_manual() {
-        $users = $this->input->post("users",true);
+        $users = $this->input->post("users", true);
+        $myrole = $this->view_data['user']['role'];
         foreach ($users as $uk => $uv) {
             $name = $uv["name"];
             $email = $uv["email"];
             $roles = $uv["roles"];
-            //do something
-            print_r($name . " has " . $email . " ask " . $roles . '<br/>');
+            //hanya bisa memasukkan orang dengan role lebih rendah (nilai role>tinggi)
+            if ($roles > $myrole) {
+                //simpan user
+            }
         }
     }
     /**
@@ -56,16 +60,14 @@ class akun extends CI_Controller {
      * membuka halaman login
      */
     public function form_login() {
-        $this->load->view("akun/login",  $this->view_data);
+        $this->load->view("akun/form_login", $this->view_data);
     }
     /**
      * login
      */
     public function login() {
-        $username = $this->input->post("username", true);
-        $password = $this->input->post("username", true);
-        $this->load->model('account_model');
-        $this->account_model->get_admin_login($username,$password);
+        $email = $this->input->post("email", true);
+        $password = $this->input->post("password", true);
     }
     /**
      * logout
@@ -79,7 +81,13 @@ class akun extends CI_Controller {
      * @param type $id id user yang ingin dilihat profilnya
      */
     public function lihat_profil($id) {
-        
+        $this->view_data['data'] = array(
+            "Nama" => "Budi"
+            , "Andkatan" => "1998"
+            , "TTL" => "Bandung, 20 September 1990"
+            , "HP" => "-"
+        );
+        $this->load->view("akun/lihat_profil", $this->view_data);
     }
     /**
      * Membuka halaman ubah profil
@@ -118,25 +126,26 @@ class akun extends CI_Controller {
      * Membuka halaman untuk mengubah sandi
      */
     public function ubah_sandi() {
-        
+        $this->load->view("akun/ubah_sandi", $this->view_data);
     }
     /**
      * Memproses perubahan sandi
      */
     public function ubah_sandi_post() {
-        
+        $old = $this->input->post("old_pass", true);
+        $new = $this->input->post("new_pass", true);
     }
     /**
      * Membuka halaman lupa sandi
      */
     public function lupa_sandi() {
-        
+        $this->load->view("akun/lupa_sandi", $this->view_data);
     }
     /**
      * Memproses form lupa sandi
      */
     public function lupa_sandi_post() {
-        
+        $email = $this->input->post("email", true);
     }
 }
 

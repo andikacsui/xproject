@@ -31,7 +31,7 @@
     </div>
     <div id="container">
         <div id="content">
-            <?php content(); ?>
+            <?php content($data); ?>
         </div>
     </div>
 
