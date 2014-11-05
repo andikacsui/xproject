@@ -10,6 +10,9 @@
             width: 60%;
         }
     </style>
+    <script src="<?php echo base_url(); ?>js/jquery.min.js"></script>
+    <script src="<?php echo base_url(); ?>js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="<?php echo base_url(); ?>js/jquery-ui.min.js" type="text/javascript"></script>
 </head>
 <body>
     <h2><?php echo $title; ?></h2>

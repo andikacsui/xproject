@@ -78,27 +78,40 @@ class akun extends CI_Controller {
     /**
      * login
      */
-    public function login() {
-        $return_url = $this->input->post("ret_url", true);
+    public function daftar_role() {
         $username = $this->input->post("username", true);
         $password = md5($this->input->post("password", true));
 
         $this->load->model("account_model");
         $result = $this->account_model->get_login($username, $password);
         if (isset($result)) {
-            var_dump($result);
-            die();
-            $role = $result['role_id'];
-            $this->session->set_userdata(array(SESS_USER_ROLE => $role, SESS_USER_NAME => $username));
+            $roles = $this->account_model->get_role($result['id']);
+            $this->session->set_userdata(array(SESS_USER_ID => $result['id'], SESS_USER_NAME => $username));
+            die(json_encode($roles));
         }
-        redirect($return_url);
+        die(json_encode(array()));
+    }
+    /**
+     * pilih role
+     */
+    public function pilih_role($role_id) {
+        $user_id = $this->session->userdata(SESS_USER_ID);
+        $this->load->model("account_model");
+        if($this->account_model->check_user_role($user_id,$role_id)){
+            $this->session->set_userdata(array(SESS_USER_ROLE => $role_id));
+            $return_url = $this->input->get("ret_url", true);
+            if($return_url=='')
+                redirect("/akun/index");
+            else
+                redirect($return_url);
+        }
     }
     /**
      * logout
      */
     public function logout() {
         $this->session->sess_destroy();
-        $this->index();
+        redirect("akun/form_login");
     }
     //--------------------------- PROIL ---------------------------------
     /**
