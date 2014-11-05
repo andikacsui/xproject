@@ -1,6 +1,6 @@
 <?php
 function content($data) { ?>
-    <form method="POST" action="<?php echo base_url(); ?>akun/ubah_sandi_post">
+    <form method="POST" action="<?php echo base_url("akun/ubah_sandi_post"); ?>">
         Password Lama
         <br/>
         <input name="old_pass" type="password"/>

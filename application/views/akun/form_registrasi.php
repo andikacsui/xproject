@@ -3,7 +3,7 @@ $us = ""; // $user;
 function content($data) {
     ?>
     <div>
-        <form method="POST" action="<?php echo base_url(); ?>akun/registrasi_manual">
+        <form method="POST" action="<?php echo base_url("akun/registrasi_manual"); ?>">
             <div class="il-cont">
                 <ol class="il-list">
                     <li>

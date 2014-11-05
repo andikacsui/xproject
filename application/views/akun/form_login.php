@@ -1,6 +1,6 @@
 <?php
 function content($data) { ?>
-    <form method="POST" action="<?php echo base_url(); ?>akun/login">
+    <form method="POST" action="<?php echo base_url("akun/login"); ?>">
         Email
         <br/>
         <input name="email"/>

@@ -11,6 +11,7 @@ class akun extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->view_data["data"] = null;
+        //dummy
         $this->view_data["user"] = array("role" => ROLE_ADMIN, "name" => "ADMIN");
     }
     /**
@@ -24,24 +25,32 @@ class akun extends CI_Controller {
      * Membuka halaman pendaftaran user
      */
     public function form_registrasi() {
-        $this->view_data['data']['user'] = $this->view_data['user'];
-        $this->load->view("akun/form_registrasi", $this->view_data);
+        $myrole = $this->view_data['user']['role'];
+        if ($myrole == ROLE_MENTOR || $myrole == ROLE_PBKD) {
+            $this->view_data['data']['user'] = $this->view_data['user'];
+            $this->load->view("akun/form_registrasi", $this->view_data);
+        }
     }
     /**
      * Menangani pendaftaran secara manual
      */
     public function registrasi_manual() {
         $users = $this->input->post("users", true);
-        $myrole = $this->view_data['user']['role'];
-        foreach ($users as $uk => $uv) {
-            $name = $uv["name"];
-            $email = $uv["email"];
-            $roles = $uv["roles"];
-            //hanya bisa memasukkan orang dengan role lebih rendah (nilai role>tinggi)
-            if ($roles > $myrole) {
-                //simpan user
+        if ($users) {
+            $myrole = $this->view_data['user']['role'];
+            print_r($users);
+            foreach ($users as $uk => $uv) {
+                $name = $uv["name"];
+                $email = $uv["email"];
+                $role = $uv["role"];
+                //hanya bisa memasukkan orang dengan role lebih rendah (nilai role>role dia)
+                if ($role > $myrole) {
+                    //simpan user
+                }
             }
         }
+        //arahkan ke halaman awal
+        redirect(base_url("akun/index"));
     }
     /**
      * Menangani pendaftaran menggunakan file excel
@@ -83,7 +92,7 @@ class akun extends CI_Controller {
     public function lihat_profil($id) {
         $this->view_data['data'] = array(
             "Nama" => "Budi"
-            , "Andkatan" => "1998"
+            , "Angkatan" => "1998"
             , "TTL" => "Bandung, 20 September 1990"
             , "HP" => "-"
         );
@@ -94,12 +103,18 @@ class akun extends CI_Controller {
      * @param type $id id user yang ingin diubah profilnya
      */
     public function ubah_profil($id) {
-        
+        $this->view_data['data'] = array(
+            "Nama" => "Budi"
+            , "Angkatan" => "1998"
+            , "TTL" => "Bandung, 20 September 1990"
+            , "HP" => "-"
+        );
+        $this->load->view("akun/ubah_profil", $this->view_data);
     }
     /**
      * Menyimpan perubahan profil
      */
-    public function ubah_profil_profil() {
+    public function ubah_profil_post() {
         
     }
     //------------------------- MANAJEMEN ROLE ---------------------------------
@@ -117,8 +132,9 @@ class akun extends CI_Controller {
     }
     /**
      * Mengganti role pengguna
+     * @param type $role Peran role user yang baru
      */
-    public function ganti_role() {
+    public function ganti_role($role) {
         
     }
     //------------------------- MANAJEMEN SANDI --------------------------------
@@ -137,15 +153,36 @@ class akun extends CI_Controller {
     }
     /**
      * Membuka halaman lupa sandi
+     * @param type $key security key untuk reset password
      */
-    public function lupa_sandi() {
-        $this->load->view("akun/lupa_sandi", $this->view_data);
+    public function lupa_sandi($key = null) {
+        if ($key == null) {
+            //jika belum ada key, masukkan email
+            $this->load->view("akun/lupa_sandi", $this->view_data);
+        } else {
+            //jika sudah ada key, arahkan ke reset password
+            $this->view_data['data']['key'] = $key;
+            $this->load->view("akun/lupa_sandi", $this->view_data);
+        }
     }
     /**
-     * Memproses form lupa sandi
+     * Memproses form masukkan email saat lupa sandi 
      */
-    public function lupa_sandi_post() {
+    public function lupa_sandi_email() {
         $email = $this->input->post("email", true);
+        //generate key untuk reset password
+        $key = "";
+        //kirim email
+    }
+    /**
+     * Mereset password
+     */
+    public function lupa_sandi_reset() {
+        $key = $this->input->post("key", true);
+        $password = $this->input->post("password", true);
+        //reset password
+        //arahkan ke halaman login
+        redirect(base_url("akun/form_login"));
     }
 }
 
