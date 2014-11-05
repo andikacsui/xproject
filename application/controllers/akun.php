@@ -12,13 +12,14 @@ class akun extends CI_Controller {
         parent::__construct();
         $this->view_data["data"] = null;
         //dummy
-        $this->view_data["user"] = array("role" => ROLE_ADMIN, "name" => "ADMIN");
+        $this->load->library('session');
+        $this->view_data["user"] = array("role" => $this->session->userdata('usr_role'), "name" => $this->session->userdata('usr_name'));
     }
     /**
      * Arahkan ke halaman tertentu sesuai dengan role
      */
     public function index() {
-        
+        echo 'seharusnya redirect ke suatu halaman';
     }
     //--------------------------- REGISTRASI ----------------------------------
     /**
@@ -29,7 +30,7 @@ class akun extends CI_Controller {
         if ($myrole == ROLE_ADMIN || $myrole == ROLE_MENTOR || $myrole == ROLE_PBKD) {
             $this->view_data['data']['user'] = $this->view_data['user'];
             $this->load->view("akun/form_registrasi", $this->view_data);
-        }
+        }else redirect('/akun/form_login?return_url=/akun/form_registrasi');
     }
     /**
      * Menangani pendaftaran secara manual
@@ -66,23 +67,30 @@ class akun extends CI_Controller {
     }
     //--------------------------- LOGIN&LOGOUT ---------------------------------
     /**
-     * membuka halaman login
+     * Membuka halaman login.
      */
     public function form_login() {
+        $return_url = $this->input->get("return_url");
+        $this->view_data['data']['ret_url'] = $return_url;
         $this->load->view("akun/form_login", $this->view_data);
     }
     /**
      * login
      */
     public function login() {
-        $email = $this->input->post("email", true);
+        $return_url = $this->input->post("ret_url", true);
+        $username = $this->input->post("username", true);
         $password = $this->input->post("password", true);
+        
+        $this->session->set_userdata(array('usr_role' => $password, 'usr_name' => $username));
+        redirect($return_url);
     }
     /**
      * logout
      */
     public function logout() {
-        
+        $this->session->sess_destroy();
+        $this->index();
     }
     //--------------------------- PROIL ---------------------------------
     /**

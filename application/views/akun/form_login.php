@@ -1,9 +1,10 @@
 <?php
 function content($data) { ?>
     <form method="POST" action="<?php echo base_url("akun/login"); ?>">
+        <input type="hidden" name="ret_url" value="<?php echo $data['ret_url'];?>"/>
         Email
         <br/>
-        <input name="email"/>
+        <input name="username"/>
         <br/>
         Password
         <br/>
