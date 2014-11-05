@@ -11,6 +11,8 @@ class account_model extends CI_Model {
 	function get_login($username, $password) {
 		$this->db->select('*');
 		$this->db->from('user');
+		$this->db->join('user_role', 'user.id = user_role.user_id', 'left');
+		$this->db->join('role', 'user_role.role_id = role.id', 'left');
 		$this->db->where('username', $username);
 		$this->db->where('password', $password);
 		
