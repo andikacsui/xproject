@@ -18,7 +18,6 @@ class account_model extends CI_Model {
 		
 		$query = $this->db->get();
 		$result = $query->first_row();
-			
 		return $result;
 	}
 	

@@ -1,6 +1,6 @@
 /*
 SQLyog Community v12.01 (64 bit)
-MySQL - 5.5.39 : Database - sistem_mentoring
+MySQL - 5.1.41 : Database - sistem_mentoring
 *********************************************************************
 */
 
@@ -211,9 +211,11 @@ CREATE TABLE `role` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `role_name` varchar(16) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 /*Data for the table `role` */
+
+insert  into `role`(`id`,`role_name`) values (1,'Admin'),(2,'Pembinaan'),(3,'Mentor'),(4,'Mentee');
 
 /*Table structure for table `tingkat` */
 
@@ -255,9 +257,11 @@ CREATE TABLE `user` (
   `status_perkawinan` varchar(10) DEFAULT NULL,
   `state` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 /*Data for the table `user` */
+
+insert  into `user`(`id`,`username`,`nama`,`password`,`foto`,`gender`,`email`,`jumlah_kakak`,`jumlah_adik`,`angkatan`,`golongan_darah`,`tanggal_lahir`,`nama_ayah`,`pekerjaan_ayah`,`nama_ibu`,`pekerjaan_ibu`,`alamat_rumah`,`alamat_kos`,`no_hp`,`telepon_rumah`,`status_perkawinan`,`state`) values (1,'ryan.riand','ryan','10c7ccc7a4f0aff03c915c485565b9da',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2,'ryan','ryan','10c7ccc7a4f0aff03c915c485565b9da',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(3,'riandi','ryan','10c7ccc7a4f0aff03c915c485565b9da',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(4,'riandi.rya',NULL,'10c7ccc7a4f0aff03c915c485565b9da',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `user_role` */
 
