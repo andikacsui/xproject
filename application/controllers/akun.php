@@ -26,7 +26,7 @@ class akun extends CI_Controller {
      */
     public function form_registrasi() {
         $myrole = $this->view_data['user']['role'];
-        if ($myrole == ROLE_MENTOR || $myrole == ROLE_PBKD) {
+        if ($myrole == ROLE_ADMIN || $myrole == ROLE_MENTOR || $myrole == ROLE_PBKD) {
             $this->view_data['data']['user'] = $this->view_data['user'];
             $this->load->view("akun/form_registrasi", $this->view_data);
         }
