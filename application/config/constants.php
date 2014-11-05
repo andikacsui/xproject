@@ -39,9 +39,15 @@ define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 /*
  * Definisi konstanta tingkatan role
  */
-define('ROLE_ADMIN', 1);
-define('ROLE_PBKD', 2);
-define('ROLE_MENTOR', 3);
+define('ROLE_ADMIN', 'admin');
+define('ROLE_PBKD', 'pembinaan');
+define('ROLE_MENTOR', 'mentor');
+define('ROLE_MENTEE', 'mentee');
 
+/*
+ * Definisi konstanta session
+ */
+define('SESS_USER_NAME', 'usr_id');
+define('SESS_USER_ROLE', 'usr_role');
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */

@@ -13,7 +13,7 @@ class akun extends CI_Controller {
         $this->view_data["data"] = null;
         //dummy
         $this->load->library('session');
-        $this->view_data["user"] = array("role" => $this->session->userdata('usr_role'), "name" => $this->session->userdata('usr_name'));
+        $this->view_data["user"] = array("role" => $this->session->userdata(SESS_USER_ROLE), "name" => $this->session->userdata(SESS_USER_NAME));
     }
     /**
      * Arahkan ke halaman tertentu sesuai dengan role
@@ -30,7 +30,8 @@ class akun extends CI_Controller {
         if ($myrole == ROLE_ADMIN || $myrole == ROLE_MENTOR || $myrole == ROLE_PBKD) {
             $this->view_data['data']['user'] = $this->view_data['user'];
             $this->load->view("akun/form_registrasi", $this->view_data);
-        }else redirect('/akun/form_login?return_url=/akun/form_registrasi');
+        } else
+            redirect('/akun/form_login?return_url=/akun/form_registrasi');
     }
     /**
      * Menangani pendaftaran secara manual
@@ -80,9 +81,16 @@ class akun extends CI_Controller {
     public function login() {
         $return_url = $this->input->post("ret_url", true);
         $username = $this->input->post("username", true);
-        $password = $this->input->post("password", true);
-        
-        $this->session->set_userdata(array('usr_role' => $password, 'usr_name' => $username));
+        $password = md5($this->input->post("password", true));
+
+        $this->load->model("account_model");
+        $result = $this->account_model->get_login($username, $password);
+        if (isset($result)) {
+            var_dump($result);
+            die();
+            $role = $result['role_id'];
+            $this->session->set_userdata(array(SESS_USER_ROLE => $role, SESS_USER_NAME => $username));
+        }
         redirect($return_url);
     }
     /**
