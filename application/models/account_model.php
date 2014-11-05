@@ -30,6 +30,20 @@ class account_model extends CI_Model {
 		return $result;
 	}
 	
+	function check_user_role($user_id, $role_id){
+		$this->db->select('*');
+		$this->db->from('user_role');
+		$this->db->where('user_id', $user_id);
+		$this->db->where('role_id', $role_id);
+		
+		$query = $this->db->get();
+		$count = $query->result();
+		if($count > 1){
+		return true;
+		}
+		return false;
+	}
+	
 	
 }
 
