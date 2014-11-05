@@ -278,6 +278,8 @@ CREATE TABLE `user_role` (
 
 /*Data for the table `user_role` */
 
+insert  into `user_role`(`user_id`,`role_id`) values (1,1),(1,2),(1,3),(2,2),(3,3),(4,4);
+
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;

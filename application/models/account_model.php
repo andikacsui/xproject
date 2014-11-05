@@ -11,13 +11,22 @@ class account_model extends CI_Model {
 	function get_login($username, $password) {
 		$this->db->select('*');
 		$this->db->from('user');
-		$this->db->join('user_role', 'user.id = user_role.user_id', 'left');
-		$this->db->join('role', 'user_role.role_id = role.id', 'left');
 		$this->db->where('username', $username);
 		$this->db->where('password', $password);
 		
 		$query = $this->db->get();
-		$result = $query->first_row();
+		$result = $query->row_array();
+		return $result;
+	}
+	
+	function get_role($id){
+		$this->db->select('*');
+		$this->db->from('user_role');
+		$this->db->join('role', 'user_role.role_id = role.id', 'left');
+		$this->db->where('user_id', $id);
+		
+		$query = $this->db->get();
+		$result = $query->result_array();
 		return $result;
 	}
 	
