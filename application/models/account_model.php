@@ -38,7 +38,7 @@ class account_model extends CI_Model {
 		
 		$query = $this->db->get();
 		$count = $query->result();
-		if($count > 1){
+		if($count > 0){
 		return true;
 		}
 		return false;
